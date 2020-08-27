@@ -1,0 +1,13 @@
+[{"NumReg":1, "Nombre":"Luisa Blanco Baroja", "Incorporacion":"1996-10-23 00:00:00", "Sueldo":1000, "CodS":1},
+ {"NumReg":2, "Nombre":"Fernando Serrano V\u00e1zquez", "Incorporacion":"1996-10-23 00:00:00", "Sueldo":1000, "CodS":2},
+ {"NumReg":3, "Nombre":"Manuel P\u00e9rez Calo", "Incorporacion":"2000-01-01 00:00:00", "Sueldo":900, "CodS":3},
+ {"NumReg":4, "Nombre":"Ana Troncoso Calvo", "Incorporacion":"2000-01-01 00:00:00", "Sueldo":900, "CodS":4},
+ {"NumReg":5, "Nombre":"Alba Troncoso Calvo", "Incorporacion":"2002-09-13 00:00:00", "Sueldo":0, "CodS":1},
+ {"NumReg":6, "Nombre":"Jorge Alonso Alonso", "Incorporacion":"2002-09-13 00:00:00", "Sueldo":0, "CodS":5},
+ {"NumReg":7, "Nombre":"Fernando Soaje Alvarez", "Incorporacion":"2010-01-01 00:00:00", "Sueldo":0, "CodS":5},
+ {"NumReg":8, "Nombre":"Rosa Luigi Paz", "Incorporacion":"2010-01-01 00:00:00", "Sueldo":1000, "CodS":5},
+ {"NumReg":9, "Nombre":"Rafael Fuertes Cabrera", "Incorporacion":"2010-01-01 00:00:00", "Sueldo":1100, "CodS":6},
+ {"NumReg":10, "Nombre":"Antonio Sancho Sancho", "Incorporacion":"2010-01-01 00:00:00", "Sueldo":1000, "CodS":0},
+ {"NumReg":11, "Nombre":"Mar\u00eda Gonzalo Fuentes", "Incorporacion":"2010-01-01 00:00:00", "Sueldo":1000, "CodS":0},
+ {"NumReg":12, "Nombre":"Juana Pel\u00e1ez Trasto", "Incorporacion":"2010-01-01 00:00:00", "Sueldo":900, "CodS":0},
+ {"NumReg":13, "Nombre":"Gonzalo Cabezas Mui\u00f1o", "Incorporacion":"2010-01-01 00:00:00", "Sueldo":1500, "CodS":0}]

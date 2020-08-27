@@ -1,0 +1,10 @@
+[{"DNI":"000000", "Nombre":"Francisco", "Apellidos":"Vilans\u00f3 Rodr\u00edguez", "Domicilio":"General Rodrigos 24", "Telefono":"999666565"},
+ {"DNI":"111111", "Nombre":"Antonio", "Apellidos":"Aguirre", "Domicilio":"Pez 20, 1\u00ba A", "Telefono":"999418768"},
+ {"DNI":"222222", "Nombre":"Jorge", "Apellidos":"Anguiano L\u00f3pez", "Domicilio":"Churruca 2, 6\u00ba D", "Telefono":"999876737"},
+ {"DNI":"333333", "Nombre":"Pilar", "Apellidos":"M\u00e9ndez Alonso", "Domicilio":"Gran Via 167", "Telefono":"999343543"},
+ {"DNI":"444444", "Nombre":"Azucena", "Apellidos":"Rubio del Val", "Domicilio":"Brasil 63, 2\u00ba A", "Telefono":"999456765"},
+ {"DNI":"555555", "Nombre":"Ra\u00fal", "Apellidos":"Guti\u00e9rrez Gonz\u00e1lez", "Domicilio":"Literatos 3, 5\u00ba", "Telefono":"999876234"},
+ {"DNI":"666666", "Nombre":"Santiago", "Apellidos":"Rivera Romero", "Domicilio":"Avda. de la Paz 30", "Telefono":"999111232"},
+ {"DNI":"777777", "Nombre":"Pedro", "Apellidos":"Gonz\u00e1lez Hernando", "Domicilio":"Castellana 290, 9\u00ba B", "Telefono":"999232221"},
+ {"DNI":"888888", "Nombre":"Antonio", "Apellidos":"D\u00edaz Mart\u00edn", "Domicilio":"Cuba 1", "Telefono":"999444554"},
+ {"DNI":"999999", "Nombre":"Virginia", "Apellidos":"Fern\u00e1ndez Fern\u00e1ndez", "Domicilio":"Brasil 65, 3\u00ba", "Telefono":"999009009"}]

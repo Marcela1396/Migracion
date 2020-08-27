@@ -1,0 +1,11 @@
+[{"CodFP":1, "Fecha":"2010-03-21 00:00:00", "Importe":1500, "NIF":"121212T", "NumReg":8},
+ {"CodFP":2, "Fecha":"2010-04-21 00:00:00", "Importe":1000, "NIF":"121212T", "NumReg":8},
+ {"CodFP":3, "Fecha":"2010-05-21 00:00:00", "Importe":500, "NIF":"121212T", "NumReg":8},
+ {"CodFP":4, "Fecha":"2010-06-21 00:00:00", "Importe":976, "NIF":"121212T", "NumReg":8},
+ {"CodFP":5, "Fecha":"2010-03-21 00:00:00", "Importe":345, "NIF":"343434L", "NumReg":1},
+ {"CodFP":6, "Fecha":"2010-05-21 00:00:00", "Importe":235, "NIF":"343434L", "NumReg":1},
+ {"CodFP":7, "Fecha":"2010-07-21 00:00:00", "Importe":1000, "NIF":"343434L", "NumReg":1},
+ {"CodFP":8, "Fecha":"2010-08-21 00:00:00", "Importe":765, "NIF":"343434L", "NumReg":1},
+ {"CodFP":9, "Fecha":"2010-03-21 00:00:00", "Importe":1235, "NIF":"545454Q", "NumReg":12},
+ {"CodFP":10, "Fecha":"2010-04-11 00:00:00", "Importe":2342, "NIF":"545454Q", "NumReg":12},
+ {"CodFP":11, "Fecha":"2010-06-15 00:00:00", "Importe":2567, "NIF":"545454Q", "NumReg":12}]

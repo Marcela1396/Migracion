@@ -1,0 +1,119 @@
+-- #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-
+-- PROCESO DE MIGRACIÒN DE UNA BASE DE DATOS IMPLEMENTADA EN UN SISTEMA SQL A UN NOSQL
+-- Presentado por: Sandra Marcela Guerrero Calvache
+-- Sistemas Avanzados de Bases de Datos
+----------------------------------------------------------------------------------------------------------------------------
+-- Sistemas de estudio: ArangoDB
+-- #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#
+
+-----------------------------------------------------------------------------------------------------------------------------
+-- SCRIPT PARA LA CREACIÓN DE UNA BASE DATOS, COLECCIONES Y DOCUMENTOS EN ARANGODB
+-----------------------------------------------------------------------------------------------------------------------------
+
+-- USO DE ARANGODB SHELL
+-- ***************************************************************************************************************************
+-- Desde la shell de ArangoDB puedo proceder a crear la base de datos o tambien 
+-- se puede lograr desde la Interfaz Grafica Web de ArangoDB Community Edition
+
+-- Creacion de una base de datos en ArangoDB
+db._createDatabase("hoteldb", {}, [{ username: "root", passwd: "", active: true}])
+
+-- Seleccionar una base de datos para trabajar con ella
+db._useDatabase("hoteldb")
+
+-- Creación de una colección (Puede ser document o Edge, por defecto se crea una
+-- de tipo document)
+db._create("cliente");
+
+-- Creación de una colección de tipo Edge
+db._createEdgeCollection("limpieza")
+
+--  Eliminar una colección 
+-- Opción 1: Propiedad de las colecciones
+db.cliente.drop();
+-- Opción 2:
+col = db.cliente;
+col.drop();
+-- Opcion 3: Propiedad de la BD
+db._drop("cliente");
+
+-- Listar las propiedades de una colección
+db.cliente.properties();
+
+-- Renombrar una colección
+db.cliente.rename("clientes");
+
+-- Listar las colecciones existentes en una base de datos
+db._collections()
+
+-- Contar la cantidad de documentos que tiene una coleccion
+db.cliente.count()
+
+
+-- USO DE ARANGO IMPORT 
+-- *************************************************************************************************************************************
+-- Para el proposito de importacion de datos y la creación de colecciones de 
+-- forma inmediata se empleo Arangoimport que permite importar archivos de tipo
+-- CSV, JSON y TSV al servidor de ArangoDB sobre el cual se esta trabajando
+
+-- Se empleo arangoimp => Desde la consola de Windows en la ruta donde se instalo ArangoDB
+
+-- Importar archivos JSON al Servidor de ArangoDB usando arangoimp
+
+-- El comando arangoimp permite cargar un archivo .json a una coleccion.  
+-- Si la coleccion no ha sido creada, se realiza previamente este proceso y la carga a una base de datos
+-- que se encuentra en el servidor de ArangoDB 
+---------------------------------------------------------------------------------------------------------------------------------------
+-- Caso 1: Colecciones sin referencias 
+-- Estas colecciones (NoSQL) representan a los documentos que  no tienen ninguna relacion de referencia a otro documento.
+
+-- Colección Precio
+arangoimp --file "C:\Users\marce\Downloads\hotel\precio.json" --collection Precio --create-collection true --server.database hoteldb
+-- Colección Cliente
+arangoimp --file "C:\Users\marce\Downloads\hotel\cliente.json" --collection Cliente --create-collection true --server.database hoteldb
+-- Colección FormaPago
+arangoimp --file "C:\Users\marce\Downloads\hotel\formapago.json" --collection FormaPago --create-collection true --server.database hoteldb
+
+-- Caso 2:  Colecciones cuyos documentos referencian a otro documento
+-- A cada documento del archivo json que se desee importar se les incrusto la llave primaria del documento a referenciar
+-- Ejemplo: Nombre_Campo: "Nombre_documento_referenciar/key_documento_referenciar" 
+
+-- Colección Habitación => Llave incrustada  "Tipo": "Precio/_key"
+arangoimp --file "C:\Users\marce\Downloads\hotel\habitacion.json" --collection Habitacion --create-collection true --server.database hoteldb
+-- Colección Empleado => Llave incrustada  "CodS":"Servicio/_key"
+arangoimp --file "C:\Users\marce\Downloads\hotel\empleado.json" --collection Empleado --create-collection true --server.database hoteldb
+-- Colección Servicio => Llave incrustada "NumReg":"Empleado/_key"
+arangoimp --file "C:\Users\marce\Downloads\hotel\servicio.json" --collection Servicio --create-collection true --server.database hoteldb
+-- Colección Proveedor => Llave incrustada : "NumReg":"Empleado/_key"
+arangoimp --file "C:\Users\marce\Downloads\hotel\proveedor.json" --collection Proveedor --create-collection true --server.database hoteldb
+
+-- Caso 3: Colecciones Many to Many (Solo 2)
+-- Para este tipo de colecciones se empleó documentos de tipo Edge 
+-- Edge son documentos especiales que se utilizan para conectar otros documentos
+-- Edge describe la conexión entre dos documentos utilizando los atributos internos: _from y _to. 
+-- Estos contienen identificadores de documentos, a saber, el punto de inicio y el punto final del enlace
+
+-- Colección Reserva => Enlace "_from":"Cliente/_key", "_to":"Habitacion/_key"
+arangoimp --file "C:\Users\marce\Downloads\hotel\reserva.json" --collection Reserva --create-collection-type edge true --server.database hoteldb
+
+-- Colección Factura_Prov => Enlace "_from":"Proveedor/121212T", "_to":"Empleado/8"
+arangoimp --file "C:\Users\marce\Downloads\hotel\factura_prov.json" --collection Factura_Prov --create-collection-type edge true --server.database hotel
+
+-- Colección Limpieza => Enlace "_from":"Empleado/11", "_to":"Habitacion/100",
+arangoimp --file "C:\Users\marce\Downloads\hotel\limpieza.json" --collection Limpieza --create-collection-type edge true --server.database hotel
+
+-- Colección Incluye => Enlace
+arangoimp --file "C:\Users\marce\Downloads\hotel\incluye.json" --collection Incluye --create-collection-type edge true --server.database hoteldb
+
+-- Colección Usa => Enlace
+arangoimp --file "C:\Users\marce\Downloads\hotel\usa.json" --collection Usa --create-collection-type edge true --server.database hoteldb
+
+-- Caso 4: Colecciones Many to Many (Más de 2)
+-- Para este caso especial ArangoDB no tiene una documentación especifica de como trabajar documentos que pueden apuntar a más de 2 de documentos
+-- a la vez. Ante ello se lo trabajará de la forma del caso 2 expuesto en este documento
+
+-- Colección Factura
+arangoimp --file "C:\Users\marce\Downloads\hotel\factura.json" --collection Factura --create-collection true --server.database hoteldb
+
+
+

@@ -1,0 +1,3 @@
+[{"Forma":"efectivo", "comision":0},
+ {"Forma":"talon", "comision":2},
+ {"Forma":"tarjeta", "comision":1}]

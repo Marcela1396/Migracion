@@ -1,0 +1,98 @@
+// #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-
+// PROCESO DE MIGRACIÒN DE UNA BASE DE DATOS IMPLEMENTADA EN UN SISTEMA SQL A UN NOSQL
+// Presentado por: Sandra Marcela Guerrero Calvache
+// Sistemas Avanzados de Bases de Datos
+// ----------------------------------------------------------------------------------
+
+// #----------------------- COMANDOS BASICOS EN ARANGODB DESDE SHELL -------------------------- #
+
+// Creación de una base de datos en ArangoDB
+db._createDatabase("academica", {}, [{ username: "root", passwd: "", active: true}])
+
+// Eliminar una base de datos
+db._dropDatabase("academica")
+
+// Listar las bases de datos existentes
+db._databases()
+
+// Seleccionar una base de datos para trabajar con ella
+db._useDatabase("academica")
+
+// Creación de una colección en la base de datos seleccionada
+db._create("estudiante");
+
+// Creación de una colección con llave primaria autoincremental
+db._create("users",{ keyOptions: { type: "autoincrement", offset: 10, increment: 5 } });
+
+// Eliminar una colección : Propiedad de las colecciones
+// Eliminar una colección, sus indices y datos
+// Opción 1a : 
+db.estudiante.drop();
+
+// Opcion 1b
+col = db.estudiante;
+col.drop();
+
+// Opcion 2: Eliminar colecciones y sus documentos : Propiedad de la BD
+db._drop("estudiante");
+
+// Listar las propiedades de una colección
+db.estudiante.properties();
+
+// Renombrar una colección
+db.estudiante.rename("estudiantes");
+
+// Obtener una colección por su nombre
+db._collection("estudiantes");
+
+//  Obtener una colección por su id
+// ==> Para ambos casos retorna el id de la colección, el nombre, y el tipo
+// [ArangoCollection 141000, "estudiantes" (type document, status loaded)]
+db._collection("141000")
+
+// Listar las colecciones existentes en una base de datos
+db._collections()
+
+// Mencionar la cantidad de documentos que tiene una coleccion
+db.estudiante.count()
+
+
+// =================================================================================================
+// Script para la inserción de datos en ArangoDB
+// En ArangoDB no existen esquemas ante ello la inserción de datos puede hacerse de diversas maneras
+// 1) Usando arangoimport e importando los datos desde un json
+arangoimp --file "C:\Users\marce\Downloads\example\clientes.json" --collection clientes --create-collection true
+
+
+2) 
+insert { 
+  "name" : { 
+    "first" : "John", 
+    "last" : "Doe" 
+  }, 
+  "city" : "cities/2241300989", 
+  "_id" : "users/2290649597", 
+  "_rev" : "2290649597", 
+  "_key" : "2290649597" 
+}into users
+
+
+-- PRIMERA CONSULTA JOIN ENTRE HABITACION Y PRECIO
+ FOR u IN Habitacion 
+    FOR c IN Precio  
+    FILTER u.Tipo == c._id RETURN { Habitacion: u, Precio: c }
+    
+db._query("FOR u IN Habitacion" +
+"  FOR c IN Precio  " +
+"  FILTER u.Tipo == c._id RETURN { Habitacion: u, Precio: c }").toArray()
+
+
+    
+-- SEGUNDA CONSULTA ENTRE SERVICIO Y EMPLEADO
+FOR u IN Empleado
+    FOR c IN Servicio 
+    FILTER u.CodS == c._id RETURN { Empleado: u, Servicio: c }
+    
+arangoimp --file "C:\Users\marce\Downloads\hotel\usa.json" --collection Usa --create-collection true --server.database hoteldb
+arangoimp --file "C:\Users\marce\Downloads\hotel\incluye.json" --collection Incluye --create-Edgecollection true --server.database hoteldb
+arangoimp --file "C:\Users\marce\Downloads\hotel\factura.json" --collection Factura --create-collection true --server.database hoteldb  

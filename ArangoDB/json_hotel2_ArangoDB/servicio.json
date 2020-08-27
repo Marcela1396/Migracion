@@ -1,0 +1,6 @@
+[{"_key":"1", "Descripcion":"tintoreria", "costeinterno":50, "NumReg":"Empleado/1"},
+ {"_key":"2", "Descripcion":"plancha", "costeinterno":30, "NumReg":"Empleado/2"},
+ {"_key":"3", "Descripcion":"lavanderia", "costeinterno":60, "NumReg":"Empleado/3"},
+ {"_key":"4", "Descripcion":"bar", "costeinterno":15, "NumReg":"Empleado/4"},
+ {"_key":"5", "Descripcion":"restaurante", "costeinterno":50, "NumReg":"Empleado/8"},
+ {"_key":"6", "Descripcion":"floristeria", "costeinterno":25, "NumReg":"Empleado/9"}]

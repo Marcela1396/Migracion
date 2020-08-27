@@ -1,0 +1,48 @@
+-- #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-
+-- PROCESO DE MIGRACIÒN DE UNA BASE DE DATOS IMPLEMENTADA EN UN SISTEMA SQL A UN NOSQL
+-- Presentado por: Sandra Marcela Guerrero Calvache
+-- Sistemas Avanzados de Bases de Datos
+----------------------------------------------------------------------------------------------------------------------------
+-- Sistemas de estudio: ArangoDB
+-- #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#
+
+-----------------------------------------------------------------------------------------------------------------------------
+-- SCRIPT PARA LA CREACIÓN DE UNA BASE DATOS, COLECCIONES Y DOCUMENTOS EN ARANGODB : OPCION 2
+-----------------------------------------------------------------------------------------------------------------------------
+
+-- USO DE ARANGODB SHELL
+-- ***************************************************************************************************************************
+// Creación de una base de datos en ArangoDB
+db._createDatabase("hoteldb2", {}, [{ username: "root", passwd: "", active: true}])
+
+// Seleccionar una base de datos para trabajar con ella
+db._useDatabase("hoteldb2")
+
+-- USO DE ARANGO IMPORT 
+-- *************************************************************************************************************************************
+arangoimp --file "C:\Users\marce\Downloads\hoteldb2\precio.json" --collection Precio --create-collection true --server.database hoteldb2
+
+arangoimp --file "C:\Users\marce\Downloads\hoteldb2\cliente.json" --collection Cliente --create-collection true --server.database hoteldb2
+
+arangoimp --file "C:\Users\marce\Downloads\hoteldb2\formapago.json" --collection FormaPago --create-collection true --server.database hoteldb2
+
+arangoimp --file "C:\Users\marce\Downloads\hoteldb2\habitacion.json" --collection Habitacion --create-collection true --server.database hoteldb2
+
+arangoimp --file "C:\Users\marce\Downloads\hoteldb2\empleado.json" --collection Empleado --create-collection true --server.database hoteldb2
+
+arangoimp --file "C:\Users\marce\Downloads\hoteldb2\servicio.json" --collection Servicio --create-collection true --server.database hoteldb2
+
+arangoimp --file "C:\Users\marce\Downloads\hoteldb2\proveedor.json" --collection Proveedor --create-collection true --server.database hoteldb2
+
+arangoimp --file "C:\Users\marce\Downloads\hoteldb2\reserva.json" --collection Reserva --create-collection true --server.database hoteldb2
+
+arangoimp --file "C:\Users\marce\Downloads\hoteldb2\factura_prov.json" --collection Factura_Prov --create-collection true --server.database hoteldb2
+
+arangoimp --file "C:\Users\marce\Downloads\hoteldb2\limpieza.json" --collection Limpieza --create-collection true --server.database hoteldb2
+
+arangoimp --file "C:\Users\marce\Downloads\hoteldb2\incluye.json" --collection Incluye --create-collection true --server.database hoteldb2
+
+arangoimp --file "C:\Users\marce\Downloads\hoteldb2\usa.json" --collection Usa --create-collection --server.database hoteldb2
+
+arangoimp --file "C:\Users\marce\Downloads\hoteldb2\factura.json" --collection Factura --create-collection true --server.database hoteldb2
+

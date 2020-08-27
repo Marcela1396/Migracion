@@ -1,0 +1,6 @@
+[{"CodS":1, "Descripcion":"tintoreria", "costeinterno":50, "NumReg":1},
+ {"CodS":2, "Descripcion":"plancha", "costeinterno":30, "NumReg":2},
+ {"CodS":3, "Descripcion":"lavanderia", "costeinterno":60, "NumReg":3},
+ {"CodS":4, "Descripcion":"bar", "costeinterno":15, "NumReg":4},
+ {"CodS":5, "Descripcion":"restaurante", "costeinterno":50, "NumReg":8},
+ {"CodS":6, "Descripcion":"floristeria", "costeinterno":25, "NumReg":9}]

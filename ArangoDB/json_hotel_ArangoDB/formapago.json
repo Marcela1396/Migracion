@@ -1,0 +1,3 @@
+[{"_key":"efectivo", "comision":0},
+ {"_key":"talon", "comision":2},
+ {"_key":"tarjeta", "comision":1}]

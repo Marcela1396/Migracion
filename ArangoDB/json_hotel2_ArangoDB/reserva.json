@@ -1,0 +1,6 @@
+[{"_key": "1","DNI":"Cliente/111111", "Numero":"Habitacion/101", "Entrada":"2011-02-01 00:00:00", "Salida":"2011-02-04 00:00:00"},
+ {"_key": "2","DNI":"Cliente/111111", "Numero":"Habitacion/102", "Entrada":"2011-02-03 00:00:00", "Salida":"2011-02-04 00:00:00"},
+ {"_key": "3","DNI":"Cliente/222222", "Numero":"Habitacion/300", "Entrada":"2011-02-02 00:00:00", "Salida":"2011-02-06 00:00:00"},
+ {"_key": "4","DNI":"Cliente/777777", "Numero":"Habitacion/203", "Entrada":"2011-02-17 00:00:00", "Salida":"2011-02-19 00:00:00"},
+ {"_key": "5","DNI":"Cliente/777777", "Numero":"Habitacion/204", "Entrada":"2011-03-25 00:00:00", "Salida":"2011-03-27 00:00:00"},
+ {"_key": "6","DNI":"Cliente/999999", "Numero":"Habitacion/200", "Entrada":"2011-02-11 00:00:00", "Salida":"2011-02-15 00:00:00"}]

@@ -1,0 +1,10 @@
+[{"_key":"100", "superficie":17, "bar":"SI", "terraza":"SI", "puedesupletoria":"SI", "Tipo":"Precio/doble"},
+ {"_key":"101", "superficie":17, "bar":"SI", "terraza":"SI", "puedesupletoria":"SI", "Tipo":"Precio/doble"},
+ {"_key":"102", "superficie":17, "bar":"SI", "terraza":"SI", "puedesupletoria":"SI", "Tipo":"Precio/individual"},
+ {"_key":"200", "superficie":17, "bar":"SI", "terraza":"SI", "puedesupletoria":"SI", "Tipo":"Precio/doble"},
+ {"_key":"201", "superficie":17, "bar":"SI", "terraza":"SI", "puedesupletoria":"NO", "Tipo":"Precio/doble"},
+ {"_key":"202", "superficie":15, "bar":"SI", "terraza":"SI", "puedesupletoria":"NO", "Tipo":"Precio/individual"},
+ {"_key":"203", "superficie":15, "bar":"NO", "terraza":"SI", "puedesupletoria":"SI", "Tipo":"Precio/individual"},
+ {"_key":"204", "superficie":17, "bar":"SI", "terraza":"SI", "puedesupletoria":"SI", "Tipo":"Precio/doble"},
+ {"_key":"300", "superficie":17, "bar":"NO", "terraza":"SI", "puedesupletoria":"SI", "Tipo":"Precio/doble"},
+ {"_key":"301", "superficie":17, "bar":"SI", "terraza":"SI", "puedesupletoria":"SI", "Tipo":"Precio/doble"}]
