@@ -71,20 +71,20 @@ FOR user IN cliente
 
 --------------------------------------------------------------------------------------------------------- 
 -- CONSULTAS
--- Seleccionar todos los registros de una tabla
+-- Seleccionar todos los registros de una tabla: MySQL
 select * from cliente;
 
--- Seleccionar todos los documentos de una tabla
+-- Seleccionar todos los documentos de una tabla : ArangoDB
 FOR user in cliente
 RETURN user
 
 -- Clausula Where
--- Seleccionar los registros que cumplan una condicion
+-- Seleccionar los registros que cumplan una condicion : MySQL
 select * from cliente where id = "999999"
 -- O más de una condición
 select * from cliente where id = "999999" and numero = 0
 
--- Seleccionar los documentos que cumplan una condicion
+-- Seleccionar los documentos que cumplan una condicion : ArangoDB
 FOR user in cliente
 FILTER user._key == "999999"
 RETURN user
@@ -93,12 +93,12 @@ FOR user in cliente
 FILTER user.numero == 0 and user._key == "182092"
 RETURN user
 
--- Seleccionar los registros de una tabla y ordenarlos por algun factor
+-- Seleccionar los registros de una tabla y ordenarlos por algun factor : MySQL
 SELECT * FROM cliente
 WHERE numero = 1
 ORDER BY nombre, genero;
 
--- Seleccionar los registros de una colección y ordenarlos por algun factor
+-- Seleccionar los registros de una colección y ordenarlos por algun factor : ArangoDB
 FOR user IN cliente
   FILTER user.numero == 1
   SORT user.nombre, user.genero
