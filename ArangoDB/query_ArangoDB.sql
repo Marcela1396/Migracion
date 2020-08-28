@@ -14,8 +14,8 @@
 -- # ========================================================================================== 
 -- 1) Obtener un listado de los empleados del hotel, con todos sus datos
 SELECT * from empleado
-
-FOR worker IN empleado
+-->  ArangoDB --------------------
+FOR worker IN Empleado
   RETURN worker
 
 -- # ========================================================================================== 
@@ -24,6 +24,7 @@ FOR worker IN empleado
 SELECT nombre, descripcion from servicio join empleado on servicio.numreg = empleado.NumReg 
 where descripcion like 'restaurante'
 
+-->  ArangoDB --------------------
 -- OPCION 1
 -- Para el caso se muestra todos los campos de ambas colecciones en sub-atributos individuales 
 FOR service IN Servicio
@@ -35,7 +36,7 @@ FOR service IN Servicio
 FOR service IN Servicio
   FOR worker IN Empleado
     FILTER service.NumReg == worker._id and service.Descripcion == "restaurante"
-    RETURN {Servicio: service.Descripcion, Empleado : worker.Nombre }
+    RETURN {Empleado : worker.Nombre, Servicio: service.Descripcion }
 
 -- OPCION 2
 -- Une las dos colecciones y muestra el resultado en una solo documento con todos los atributos con la función MERGE
@@ -56,8 +57,8 @@ where empleado.cods = (select cods from empleado where nombre like '%orge%')
 -- exclusivamente para aquellos que tengan algún servicio asignado
 select nombre, descripcion from empleado join servicio on empleado.CodS = servicio.CodS
 
+-->  ArangoDB --------------------
 -- Para el caso se muestra todos los campos de ambas colecciones en sub-atributos individuales 
-
 FOR worker IN Empleado
   FOR service IN Servicio
     FILTER worker.CodS == service._id
@@ -83,13 +84,12 @@ from precio join habitacion on precio.tipo = habitacion.tipo
 join factura on habitacion.numero = factura.numero 
 where factura.salida is null
 
-
+-->  ArangoDB --------------------
 FOR h IN Habitacion
   FOR p IN Precio
 	FOR f IN Factura
-		FILTER h.Tipo == p._id and f.Numero == h._id and f.Salida == ""
+		FILTER h.Tipo == p._id and f.Numero == h._id and f.Salida == null
 		RETURN {Numero: h._key, Tipo: p._key, Precio : p.precio } 
-
 
 -- # ========================================================================================== 
 -- 6) Obtener el nombre y apellidos del cliente o clientes que más veces hayan estado en el 
@@ -103,8 +103,6 @@ having count(factura.dni) = (select max(NumEstancias) as Maximo
 from (select count(factura.dni) as NumEstancias from factura  group by factura.dni ) T1)
 
 
-
-
 -- # ========================================================================================== 
 -- 7) Obtener los datos del empleado o empleados que hayan limpiado todas las habitaciones del 
 -- hotel
@@ -113,8 +111,6 @@ select t1.nombre, count(t1.nombre) as NumeroHab from
 from empleado join limpieza on empleado.numreg = limpieza.numreg)t1
 group by t1.nombre
 having count(t1.nombre) = (select count(numero) from habitacion)
-
-
 
 
 -- # ========================================================================================== 
