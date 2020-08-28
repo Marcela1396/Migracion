@@ -84,6 +84,12 @@ join factura on habitacion.numero = factura.numero
 where factura.salida is null
 
 
+FOR h IN Habitacion
+  FOR p IN Precio
+	FOR f IN Factura
+		FILTER h.Tipo == p._id and f.Numero == h._id and f.Salida == ""
+		RETURN {Numero: h._key, Tipo: p._key, Precio : p.precio } 
+
 
 -- # ========================================================================================== 
 -- 6) Obtener el nombre y apellidos del cliente o clientes que más veces hayan estado en el 
