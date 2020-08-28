@@ -23,11 +23,11 @@ Las colecciones Reserva, Factura_Prov, Limpieza, Incluye, Usa y Factura que en e
 producto de una relación mucho a muchos, se trabajan de forma independiente sin usar Documentos de Tipo Edge.
 
 ---------------------------------------------------------------------------------------------------------------------
-3) db_schema_no_relacional : Contiene el script para la creacion de la base de datos y la forma de inserción de los
+3) db_script_no_relacional : Contiene el script para la creacion de la base de datos y la forma de inserción de los
 documentos en las colecciones. Cabe resaltar que ArangoDB no tiene ningun tipo de esquema
 
 ---------------------------------------------------------------------------------------------------------------------
-4) query_ArangoDB: Contiene el script con algunas consultas realizadas al el modelo NoSQL
+4) query_ArangoDB: Contiene el script con algunas consultas realizadas al modelo NoSQL
 
 
 
