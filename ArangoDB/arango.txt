@@ -57,14 +57,15 @@ db._collections()
 db.estudiante.count()
 
 
-// =================================================================================================
-// Script para la inserción de datos en ArangoDB
+// ======================================================================================================================================
+// INSERCIÓN DE DATOS EN ArangoDB
 // En ArangoDB no existen esquemas ante ello la inserción de datos puede hacerse de diversas maneras
 // 1) Usando arangoimport e importando los datos desde un json
+
 arangoimp --file "C:\Users\marce\Downloads\example\clientes.json" --collection clientes --create-collection true
 
-
-2) 
+// 2) INSERTANDO UN DOCUMENTO DESDE LA INTERFAZ WEB DE ARANGODB
+// Insertando un documento el cual tiene referencia a otro documento
 insert { 
   "name" : { 
     "first" : "John", 
@@ -76,12 +77,31 @@ insert {
   "_key" : "2290649597" 
 }into users
 
+// Insertando un documento de tipo Edge
+insert{
+"_key":"3",
+"_from":{"Factura/1","Incluye/8"},
+"_to": {"Servicio/1","Servicio/4"},
+"coste":25, 
+"fecha":"2010-01-01 00:00:00"
+} into prueba
+
+// Insertando varios documentos en una coleccion
+FOR user IN [ 
+	{"_key":"000000", "Nombre":"Francisco", "Apellidos":"Vilans\u00f3 Rodr\u00edguez", "Domicilio":"General Rodrigos 24", "Telefono":"999666565"},
+	{"_key":"111111", "Nombre":"Antonio", "Apellidos":"Aguirre", "Domicilio":"Pez 20, 1\u00ba A", "Telefono":"999418768"},
+	{"_key":"222222", "Nombre":"Jorge", "Apellidos":"Anguiano L\u00f3pez", "Domicilio":"Churruca 2, 6\u00ba D", "Telefono":"999876737"},
+	{"_key":"888888", "Nombre":"Antonio", "Apellidos":"D\u00edaz Mart\u00edn", "Domicilio":"Cuba 1", "Telefono":"999444554"},
+	{"_key":"999999", "Nombre":"Virginia", "Apellidos":"Fern\u00e1ndez Fern\u00e1ndez", "Domicilio":"Brasil 65, 3\u00ba", "Telefono":"999009009"}]
+INSERT user INTO test
+
 
 -- PRIMERA CONSULTA JOIN ENTRE HABITACION Y PRECIO
  FOR u IN Habitacion 
     FOR c IN Precio  
     FILTER u.Tipo == c._id RETURN { Habitacion: u, Precio: c }
-    
+
+-- EN LA SHELL    
 db._query("FOR u IN Habitacion" +
 "  FOR c IN Precio  " +
 "  FILTER u.Tipo == c._id RETURN { Habitacion: u, Precio: c }").toArray()

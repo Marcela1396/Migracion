@@ -13,24 +13,68 @@
 
 -- # ========================================================================================== 
 -- 1) Obtener un listado de los empleados del hotel, con todos sus datos
+SELECT * from empleado
 
-
+FOR worker IN empleado
+  RETURN worker
 
 -- # ========================================================================================== 
 -- 2) Obtener el nombre del jefe del servicio de "Restaurante"
-SELECT nombre, descripcion from servicio join empleado on servicio.numreg = empleado.NumReg 
-where descripcion like '%estauran%'
 
+SELECT nombre, descripcion from servicio join empleado on servicio.numreg = empleado.NumReg 
+where descripcion like 'restaurante'
+
+-- OPCION 1
+-- Para el caso se muestra todos los campos de ambas colecciones en sub-atributos individuales 
+FOR service IN Servicio
+  FOR worker IN Empleado
+    FILTER service.NumReg == worker._id and service.Descripcion == "restaurante"
+    RETURN { Servicio: service, Empleado: worker }
+    
+-- Para el caso solo muestra el nombre del empleado y la descripcion del servicio (Restaurante) 
+FOR service IN Servicio
+  FOR worker IN Empleado
+    FILTER service.NumReg == worker._id and service.Descripcion == "restaurante"
+    RETURN {Servicio: service.Descripcion, Empleado : worker.Nombre }
+
+-- OPCION 2
+-- Une las dos colecciones y muestra el resultado en una solo documento con todos los atributos con la función MERGE
+FOR service IN Servicio
+  FOR worker IN Empleado
+    FILTER service.NumReg == worker._id and service.Descripcion == "restaurante"
+    RETURN MERGE(service,worker)
+    
 -- # ========================================================================================== 
 -- 3) Obtener el nombre del jefe de "Jorge Alonso Alonso"
 select nombre from servicio join empleado on servicio.numreg = empleado.NumReg 
 where empleado.cods = (select cods from empleado where nombre like '%orge%')
 
+
+
 -- # ========================================================================================== 
 -- 4) Obtener un listado de los empleados y los servicios a los que están asignados, 
 -- exclusivamente para aquellos que tengan algún servicio asignado
-select nombre, descripcion from empleado join servicio on empleado.NumReg = servicio.numreg
+select nombre, descripcion from empleado join servicio on empleado.CodS = servicio.CodS
 
+-- Para el caso se muestra todos los campos de ambas colecciones en sub-atributos individuales 
+
+FOR worker IN Empleado
+  FOR service IN Servicio
+    FILTER worker.CodS == service._id
+    RETURN {Empleado: worker, Servicio:service }
+
+-- Para el caso solo muestra el nombre del empleado y la descripcion del servicio al cual esta asignado
+FOR worker IN Empleado
+  FOR service IN Servicio
+    FILTER worker.CodS == service._id
+    RETURN {Empleado: worker.Nombre, Servicio:service.Descripcion }    
+    
+-- Une las dos colecciones y muestra el resultado en una sola con la función MERGE
+FOR worker IN Empleado
+  FOR service IN Servicio
+    FILTER worker.CodS == service._id
+    RETURN MERGE(worker,service)
+    
 -- # ========================================================================================== 
 -- 5) Obtener el número de habitación, tipo y precio de las habitaciones que estén ocupadas en 
 -- la actualidad (no tienen fecha de salida)
@@ -38,6 +82,8 @@ select habitacion.numero, habitacion.tipo, precio.precio
 from precio join habitacion on precio.tipo = habitacion.tipo
 join factura on habitacion.numero = factura.numero 
 where factura.salida is null
+
+
 
 -- # ========================================================================================== 
 -- 6) Obtener el nombre y apellidos del cliente o clientes que más veces hayan estado en el 
@@ -50,6 +96,9 @@ group by factura.dni, cliente.nombre, cliente.apellidos
 having count(factura.dni) = (select max(NumEstancias) as Maximo 
 from (select count(factura.dni) as NumEstancias from factura  group by factura.dni ) T1)
 
+
+
+
 -- # ========================================================================================== 
 -- 7) Obtener los datos del empleado o empleados que hayan limpiado todas las habitaciones del 
 -- hotel
@@ -58,6 +107,9 @@ select t1.nombre, count(t1.nombre) as NumeroHab from
 from empleado join limpieza on empleado.numreg = limpieza.numreg)t1
 group by t1.nombre
 having count(t1.nombre) = (select count(numero) from habitacion)
+
+
+
 
 -- # ========================================================================================== 
 -- 8) Obtener el listado de los clientes que ocupen o hayan ocupado alguna vez habitaciones de 

@@ -27,7 +27,7 @@ where empleado.cods = (select cods from empleado where nombre like '%orge%')
 
 -- # ========================================================================================== -- 4) Obtener un listado de los empleados y los servicios a los que están asignados, 
 -- exclusivamente para aquellos que tengan algún servicio asignado
-select nombre, descripcion from empleado join servicio on empleado.NumReg = servicio.numreg
+select nombre, descripcion from empleado join servicio on empleado.CodS = servicio.CodS
 
 -- # ========================================================================================== -- 5) Obtener el número de habitación, tipo y precio de las habitaciones que estén ocupadas en 
 -- la actualidad (no tienen fecha de salida)
