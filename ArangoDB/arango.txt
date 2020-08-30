@@ -116,3 +116,13 @@ FOR u IN Empleado
 arangoimp --file "C:\Users\marce\Downloads\hotel\usa.json" --collection Usa --create-collection true --server.database hoteldb
 arangoimp --file "C:\Users\marce\Downloads\hotel\incluye.json" --collection Incluye --create-Edgecollection true --server.database hoteldb
 arangoimp --file "C:\Users\marce\Downloads\hotel\factura.json" --collection Factura --create-collection true --server.database hoteldb  
+
+-- Muchos motores NoSQL trabajan con estas propiedades, por ejemplo, ArangoDB ante un problema de red, elige la consistencia de la información frente a la disponibilidad. 
+
+
+-- Consulta con _from y _to
+FOR h IN Habitacion
+	FOR e IN Empleado
+		FOR l IN Limpieza
+		    FILTER l._from == e._id and l._to == h._id
+		    RETURN merge(e,h,l)

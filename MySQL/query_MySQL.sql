@@ -19,11 +19,11 @@ SELECT numreg, nombre, incorporacion, sueldo, cods FROM empleado
 
 -- # ========================================================================================== -- 2) Obtener el nombre del jefe del servicio de "Restaurante"
 SELECT nombre, descripcion from servicio join empleado on servicio.numreg = empleado.NumReg 
-where descripcion like '%estauran%'
+where descripcion like 'restaurante'
 
 -- # ========================================================================================== -- 3) Obtener el nombre del jefe de "Jorge Alonso Alonso"
 select nombre from servicio join empleado on servicio.numreg = empleado.NumReg 
-where empleado.cods = (select cods from empleado where nombre like '%orge%')
+where empleado.cods in (select cods from empleado where nombre like 'Jorge Alonso Alonso')
 
 -- # ========================================================================================== -- 4) Obtener un listado de los empleados y los servicios a los que están asignados, 
 -- exclusivamente para aquellos que tengan algún servicio asignado
@@ -58,19 +58,30 @@ having count(t1.nombre) = (select count(numero) from habitacion)
 -- # ========================================================================================== 
 -- 8) Obtener el listado de los clientes que ocupen o hayan ocupado alguna vez habitaciones de 
 -- los dos tipos (individual y doble)
-select distinct(cliente.nombre) as Cliente from cliente join factura on cliente.dni = factura.dni
-join habitacion on factura.numero = habitacion.numero where habitacion.tipo like '%oble%'
-intersect
-select distinct(cliente.nombre) as Cliente from cliente join factura on cliente.dni = factura.dni
-join habitacion on factura.numero = habitacion.numero where habitacion.tipo like '%ndivi%'
 
--- En MySQL el intersect es equivalente a
-SELECT distinct(cliente.nombre) as Cliente
+-- En gestores como Postgresql que tienen la función Intersect se haria de la siguiente forma
+SELECT distinct(factura.DNI), concat_ws(' ', cliente.nombre, cliente.apellidos)  as Clientes 
 from cliente join factura on cliente.dni = factura.dni
 join habitacion on factura.numero = habitacion.numero 
-where habitacion.tipo like '%oble%' and cliente.nombre in
-(select distinct(cliente.nombre) as Cliente  from cliente join factura on cliente.dni = factura.dni
-join habitacion on factura.numero = habitacion.numero where habitacion.tipo like '%ndivi%');
+where habitacion.tipo like 'doble'
+intersect
+SELECT distinct(factura.DNI), concat_ws(' ', cliente.nombre, cliente.apellidos)  as Clientes 
+from cliente join factura on cliente.dni = factura.dni
+join habitacion on factura.numero = habitacion.numero 
+where habitacion.tipo like 'individual';
+
+-- En MySQL el intersect es equivalente a ----------------------------------------------------------
+SELECT  distinct(factura.DNI) as DNI, concat_ws(' ', cliente.nombre, cliente.apellidos)  as Cliente    
+from cliente join factura on cliente.dni = factura.dni
+join habitacion on factura.numero = habitacion.numero 
+where habitacion.tipo like 'doble' and factura.DNI
+IN (
+select distinct(factura.DNI)  
+from cliente join factura on cliente.dni = factura.dni
+join habitacion on factura.numero = habitacion.numero 
+where habitacion.tipo like 'individual')
+order by factura.DNI;
+
 
 -- # ========================================================================================== 
 -- 9) Obtener un listado de los proveedores cuyas facturas hayan sido aprobadas únicamente por 
@@ -84,9 +95,9 @@ join empleado on factura_prov.numreg = empleado.numreg
 -- 10) Igualar el sueldo del empleado que menos cobra dentro del servicio de "restaurante" con 
 -- el del empleado que más cobra del mismo servicio
 
-select servicio.descripcion, max(empleado.sueldo) as SueldoMax,  min(empleado.sueldo) as SueldoMin
+select empleado.nombre, servicio.descripcion, max(empleado.sueldo) as SueldoMax,  min(empleado.sueldo) as SueldoMin
 from empleado join servicio on empleado.cods = servicio.cods
-where servicio.descripcion like '%estaur%'
+where servicio.descripcion like 'restaurante'
 group by servicio.descripcion
 
 -- # ========================================================================================== 

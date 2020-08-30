@@ -1,0 +1,120 @@
+-- #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-
+-- PROCESO DE MIGRACIÒN DE UNA BASE DE DATOS IMPLEMENTADA EN UN SISTEMA SQL A UN NOSQL
+-- Presentado por: Sandra Marcela Guerrero Calvache
+-- Sistemas Avanzados de Bases de Datos
+----------------------------------------------------------------------------------------------------------------------------
+-- Sistemas de estudio: ArangoDB
+-- #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#
+
+-----------------------------------------------------------------------------------------------------------------------------
+-- COMANDOS IMPORTANTES DENTRO DE ARANGODB
+-----------------------------------------------------------------------------------------------------------------------------
+-- NOTA: A diferencia del Modelo Relacional, ArangoDB no tiene ningun tipo de esquema predefinido lo que hace que sea
+-- un motor bastante flexible
+
+-- USO DE ARANGODB SHELL
+-- ***************************************************************************************************************************
+-- Desde la shell de ArangoDB puedo proceder a crear la base de datos o tambien 
+-- se puede lograr desde la Interfaz Grafica Web de ArangoDB Community Edition
+
+-----------------------------------------------------------------------------------------------------------------------------
+-- Creacion de una base de datos en ArangoDB
+db._createDatabase("hoteldb2", {}, [{ username: "root", passwd: "", active: true}])
+
+-- Seleccionar una base de datos para trabajar con ella
+db._useDatabase("hoteldb2")
+
+-- Creación de una colección (Puede ser document o Edge, por defecto se crea una
+-- de tipo document)
+db._create("cliente");
+
+--  Eliminar una colección 
+-- Opción 1: Propiedad de las colecciones
+db.cliente.drop();
+-- Opción 2:
+col = db.cliente;
+col.drop();
+-- Opcion 3: Propiedad de la BD
+db._drop("cliente");
+
+-- Listar las propiedades de una colección
+db.cliente.properties();
+
+-- Renombrar una colección
+db.cliente.rename("clientes");
+
+-- Listar las colecciones existentes en una base de datos
+db._collections()
+
+-- Contar la cantidad de documentos que tiene una coleccion
+db.cliente.count()
+
+
+-- USO DE ARANGODB WEB INTERFACE
+ ***************************************************************************************************************************
+
+-- Inserción de datos: 1 solo documento : ArangoDB
+INSERT { _key:"999999", nombre: "Marcela Guerrero", genero: "f" }   INTO cliente
+
+-- Inserción de multiples datos : ArangoDB
+FOR user IN [ 
+ {"_key":"000000", "nombre":"Francisco", "genero":"m"},
+ {"_key":"111111", "nombre":"Antonio",  "genero":"m"},
+ {"_key":"222222", "nombre":"Jorge",  "  genero":"m"}, 
+]
+INSERT user INTO cliente
+
+---------------------------------------------------------------------------------------------------------
+-- CLAUSULA UPDATE
+-- Actualizacion de datos: 1 solo documento : ArangoDB
+UPDATE { _key: "111111" } WITH { "nombre": "Marcela Guerrero" } IN cliente
+
+-- Adicionar un nuevo campo a todos los documentos de una colección en ArangoDB
+FOR user IN cliente
+  UPDATE user 
+    WITH { numero: 0 } IN cliente
+
+---------------------------------------------------------------------------------------------------------
+-- CLAUSULA REMOVE
+-- Remover un campo : ArangoDB
+FOR user IN cliente
+  UPDATE user WITH { numero: null } 
+  IN cliente
+  OPTIONS { keepNull: false }
+---------------------------------------------------------------------------------------------------------  
+-- CLAUSULA DELETE/REMOVE
+
+-- Eliminar un documento en ArangoDB
+REMOVE { _key:"111111" } IN cliente
+
+-- Eliminar multiples documentos en ArangoDB
+FOR user IN cliente
+  FILTER user.numero == 1
+  REMOVE user IN cliente
+
+--------------------------------------------------------------------------------------------------------- 
+--  MANEJO DE CONSULTAS
+
+-- Seleccionar todos los documentos de una tabla : ArangoDB
+FOR user in cliente
+RETURN user
+
+-- Clausula FILTER : WHERE
+
+-- Seleccionar los documentos que cumplan una condicion : ArangoDB
+FOR user in cliente
+FILTER user._key == "999999"
+RETURN user
+-- O más de una condición
+FOR user in cliente
+FILTER user.numero == 0 and user._key == "182092"
+RETURN user
+
+-- Clausula SORT : OrderBY
+
+-- Seleccionar los registros de una colección y ordenarlos por algun factor : ArangoDB
+FOR user IN cliente
+  FILTER user.numero == 1
+  SORT user.nombre, user.genero
+  RETURN user
+
