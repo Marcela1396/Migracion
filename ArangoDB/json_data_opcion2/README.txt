@@ -115,15 +115,15 @@ arangoimp --file "C:\Users\marce\Downloads\hotel\usa.json" --collection Usa --cr
 -- a la vez. Ante ello se lo trabajará de la forma del caso 2 expuesto en este documento
 
 -- Colección Factura
-1. Colección a Referenciar: Cliente
+a. Colección a Referenciar: Cliente
  => Atributo que servira para la referencia en el Documento Factura: "DNI"
  =>  Ej: "DNI":"Cliente/111111"
  
-2.Colección a Referenciar: Habitacion
+b.Colección a Referenciar: Habitacion
  => Atributo que servira para la referencia en el Documento Factura: "Numero"
  =>  Ej: "Numero":"Habitacion/101"
  
-3.Colección a Referenciar: FormaPago
+c.Colección a Referenciar: FormaPago
  => Atributo que servira para la referencia en el Documento Factura: "Forma"
  =>  Ej: "Forma": "FormaPago/tarjeta"
 arangoimp --file "C:\Users\marce\Downloads\hotel\factura.json" --collection Factura --create-collection true --server.database hoteldb

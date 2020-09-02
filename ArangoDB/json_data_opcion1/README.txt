@@ -93,11 +93,11 @@ arangoimp --file "C:\Users\marce\Downloads\hoteldb2\proveedor.json" --collection
 
 -- Colección Reserva  --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-1. Colección a Referenciar: Cliente
+a. Colección a Referenciar: Cliente
  => Atributo que servira para la referencia en el Documento Reserva: "DNI"
  =>  Ej: "DNI":"Cliente/111111"
  
-2.Colección a Referenciar: Habitacion
+b.Colección a Referenciar: Habitacion
  => Atributo que servira para la referencia en el Documento Reserva: "Numero"
  =>  Ej: "Numero":"Habitacion/101"
 
@@ -105,11 +105,11 @@ arangoimp --file "C:\Users\marce\Downloads\hoteldb2\reserva.json" --collection R
 
 -- Colección Factura_Prov -----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-1. Colección a Referenciar: Proveedor
+a. Colección a Referenciar: Proveedor
  => Atributo que servira para la referencia en el Documento Factura_Prov: "NIF"
  =>  Ej: "NIF":"Proveedor/121212T"
  
-2. Colección a Referenciar: Empleado
+b. Colección a Referenciar: Empleado
 => Atributo que servira para la referencia en el Documento Factura_Prov: "NumReg"
 =>  Ej: "NumReg":"Empleado/1"
 
@@ -118,11 +118,11 @@ arangoimp --file "C:\Users\marce\Downloads\hoteldb2\factura_prov.json" --collect
 
 -- Colección Limpieza --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-1.Colección a Referenciar: Habitacion
+a.Colección a Referenciar: Habitacion
  => Atributo que servira para la referencia en el Documento Limpieza: "Numero"
  =>  Ej: "Numero":"Habitacion/101"
 
-2. Colección a Referenciar: Empleado
+b. Colección a Referenciar: Empleado
 => Atributo que servira para la referencia en el Documento Limpieza: "NumReg"
 =>  Ej: "NumReg":"Empleado/1"
 
@@ -130,22 +130,22 @@ arangoimp --file "C:\Users\marce\Downloads\hoteldb2\limpieza.json" --collection 
 
 -- Colección Incluye --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-1.Colección a Referenciar: Factura
+a.Colección a Referenciar: Factura
  => Atributo que servira para la referencia en el Documento Incluye: "CodigoF"
  =>  Ej: "CodigoF":"Factura/1"
 
-2. Colección a Referenciar: Servicio
+b. Colección a Referenciar: Servicio
 => Atributo que servira para la referencia en el Documento Incluye: "CodS"
 =>  Ej: "CodS":"Servicio/1"
 
 arangoimp --file "C:\Users\marce\Downloads\hoteldb2\incluye.json" --collection Incluye --create-collection true --server.database hoteldb2
 
 -- Colección Usa  -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-1. Colección a Referenciar: Servicio
+a. Colección a Referenciar: Servicio
 => Atributo que servira para la referencia en el Documento Usa: "CodS"
 =>  Ej: "CodS":"Servicio/1"
 
-2. Colección a Referenciar: Servicio
+b. Colección a Referenciar: Servicio
 => Atributo que servira para la referencia en el Documento Usa: "Servicio_CodS"
 =>  Ej: "Servicio_CodS":"Servicio/1"
 
@@ -153,15 +153,15 @@ arangoimp --file "C:\Users\marce\Downloads\hoteldb2\usa.json" --collection Usa -
 
 -- Colección Factura ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-1. Colección a Referenciar: Cliente
+a. Colección a Referenciar: Cliente
  => Atributo que servira para la referencia en el Documento Factura: "DNI"
  =>  Ej: "DNI":"Cliente/111111"
  
-2.Colección a Referenciar: Habitacion
+b.Colección a Referenciar: Habitacion
  => Atributo que servira para la referencia en el Documento Factura: "Numero"
  =>  Ej: "Numero":"Habitacion/101"
  
-3.Colección a Referenciar: FormaPago
+c.Colección a Referenciar: FormaPago
  => Atributo que servira para la referencia en el Documento Factura: "Forma"
  =>  Ej: "Forma": "FormaPago/tarjeta"
 
