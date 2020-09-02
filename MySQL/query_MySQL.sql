@@ -82,7 +82,6 @@ join habitacion on factura.numero = habitacion.numero
 where habitacion.tipo like 'individual')
 order by factura.DNI;
 
-
 -- # ========================================================================================== 
 -- 9) Obtener un listado de los proveedores cuyas facturas hayan sido aprobadas únicamente por 
 -- el encargado y no por el responsable de un servicio.
@@ -90,20 +89,10 @@ order by factura.DNI;
 select  distinct proveedor.nombre as Proveedor, empleado.nombre as Encargado from 
 proveedor join factura_prov on proveedor.nif = factura_prov.nif
 join empleado on factura_prov.numreg = empleado.numreg
+where empleado.nombre in (
+select empleado.nombre from empleado join proveedor on empleado.NumReg = proveedor.NumReg
+where empleado.nombre not in (
+select empleado.nombre from empleado join servicio on empleado.NumReg = servicio.NumReg));
 
--- # ========================================================================================== 
--- 10) Igualar el sueldo del empleado que menos cobra dentro del servicio de "restaurante" con 
--- el del empleado que más cobra del mismo servicio
 
-select empleado.nombre, servicio.descripcion, max(empleado.sueldo) as SueldoMax,  min(empleado.sueldo) as SueldoMin
-from empleado join servicio on empleado.cods = servicio.cods
-where servicio.descripcion like 'restaurante'
-group by servicio.descripcion
 
--- # ========================================================================================== 
--- 11) Incrementar en un 10% el sueldo del empleado de "limpieza" que más habitaciones haya limpiado.
-select t1.nombre, count(t1.nombre) as NumeroHab, t1.sueldo, t1.sueldo + (t1.sueldo*0.1) as SueldoNuevo from 
-(select distinct empleado.nombre , empleado.sueldo, limpieza.numero 
-from empleado join limpieza on empleado.numreg = limpieza.numreg)t1
-group by t1.nombre, t1.sueldo
-having count(t1.nombre) = (select count(numero) from habitacion)

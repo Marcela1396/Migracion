@@ -43,13 +43,14 @@ FOR service IN Servicio
     RETURN {Empleado : worker.Nombre, Servicio: service.Descripcion }
 
 -- OPCION 2
--- Une las dos colecciones y muestra el resultado en un solo documento con todos los atributos con la función MERGE
+-- Une las dos colecciones y muestra el resultado en un solo documento con todos los atributos con la 
+-- función MERGE
 FOR service IN Servicio
   FOR worker IN Empleado
     FILTER service.NumReg == worker._id and service.Descripcion == "restaurante"
     RETURN MERGE(service,worker)
     
--- # ========================================================================================== 
+-- # ======================================================================================================= 
 -- 3) Obtener el nombre del jefe de "Jorge Alonso Alonso"
 -- > MySQL
 select nombre from servicio join empleado on servicio.numreg = empleado.NumReg 
@@ -78,7 +79,7 @@ FOR service IN Servicio
 ) 
     RETURN {Empleado : worker.Nombre, Servicio: service.Descripcion }
 
--- # ========================================================================================== 
+-- # ====================================================================================================== 
 -- 4) Obtener un listado de los empleados y los servicios a los que están asignados, 
 -- exclusivamente para aquellos que tengan algún servicio asignado
 
@@ -104,7 +105,7 @@ FOR worker IN Empleado
     FILTER worker.CodS == service._id
     RETURN MERGE(worker,service)
     
--- # ========================================================================================== 
+-- # ====================================================================================================== 
 -- 5) Obtener el número de habitación, tipo y precio de las habitaciones que estén ocupadas en 
 -- la actualidad (no tienen fecha de salida)
 
@@ -122,7 +123,7 @@ FOR h IN Habitacion
 		FILTER h.Tipo == p._id and f.Numero == h._id and f.Salida == null
 		RETURN {Numero: h._key, Tipo: p._key, Precio : p.precio } 
 
--- # ========================================================================================== 
+-- # ======================================================================================================== 
 -- 6) Obtener el nombre y apellidos del cliente o clientes que más veces hayan estado en el 
 -- hotel (no número total de noches, sino estancias diferentes: una persona que ha estado tres 
 -- veces diferentes de una noche en el hotel habrá "estado" más veces que otra persona que ha 
@@ -163,7 +164,7 @@ FOR user IN C
          )
     RETURN user
 
--- # ========================================================================================== 
+-- # ======================================================================================================== 
 -- 7) Obtener los datos del empleado o empleados que hayan limpiado todas las habitaciones del 
 -- hotel
 select t1.nombre, count(t1.nombre) as NumeroHab from 
@@ -207,7 +208,7 @@ FOR w IN B
     RETURN w
 
 
--- # ========================================================================================== 
+-- # ========================================================================================================= 
 -- 8) Obtener el listado de los clientes que ocupen o hayan ocupado alguna vez habitaciones de 
 -- los dos tipos (individual y doble)
 
@@ -248,7 +249,7 @@ FOR c IN Cliente
 RETURN INTERSECTION(X,Y)
 
 			 
--- # ========================================================================================== 
+-- # ======================================================================================================== 
 -- 9) Obtener un listado de los proveedores cuyas facturas hayan sido aprobadas únicamente por 
 -- el encargado y no por el responsable de un servicio.
 
@@ -256,6 +257,11 @@ RETURN INTERSECTION(X,Y)
 select  distinct proveedor.nombre as Proveedor, empleado.nombre as Encargado from 
 proveedor join factura_prov on proveedor.nif = factura_prov.nif
 join empleado on factura_prov.numreg = empleado.numreg
+where empleado.nombre in (
+select empleado.nombre from empleado join proveedor on empleado.NumReg = proveedor.NumReg
+where empleado.nombre not in (
+select empleado.nombre from empleado join servicio on empleado.NumReg = servicio.NumReg));
+
 
 -- > ArangoDB
 FOR p IN Proveedor
@@ -265,21 +271,5 @@ FOR p IN Proveedor
 		RETURN DISTINCT{Proveedor: p.Nombre, Empleado_Encargado: e.Nombre}
 
 
--- # ========================================================================================== 
--- 10) Igualar el sueldo del empleado que menos cobra dentro del servicio de "restaurante" con 
--- el del empleado que más cobra del mismo servicio
 
-select empleado.nombre, servicio.descripcion, max(empleado.sueldo) as SueldoMax,  min(empleado.sueldo) as SueldoMin
-from empleado join servicio on empleado.cods = servicio.cods
-where servicio.descripcion like 'restaurante'
-group by servicio.descripcion
-
-
--- # ========================================================================================== 
--- 11) Incrementar en un 10% el sueldo del empleado de "limpieza" que más habitaciones haya limpiado.
-select t1.nombre, count(t1.nombre) as NumeroHab, t1.sueldo, t1.sueldo + (t1.sueldo*0.1) as SueldoNuevo from 
-(select distinct empleado.nombre , empleado.sueldo, limpieza.numero 
-from empleado join limpieza on empleado.numreg = limpieza.numreg)t1
-group by t1.nombre, t1.sueldo
-having count(t1.nombre) = (select count(numero) from habitacion)
 

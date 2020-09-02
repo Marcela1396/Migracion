@@ -5,6 +5,36 @@
 ----------------------------------------------------------------------------------------------------------------------------
 -- Sistemas de estudio: MySQL y ArangoDB
 -- #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#
+-- 
+
+-- SENTENCIAS GENERALES
+-- Creacion de una base de datos: MySQL Shell
+CREATE DATABASE Hotel;
+
+-- Creacion de una base de datos: ArangoDB Shell
+db._createDatabase("hoteldb", {}, [{ username: "root", passwd: "", active: true}])
+
+-- Seleccionar una base de datos para trabajar con ella : MySQL
+use hotel;
+
+-- Seleccionar una base de datos para trabajar con ella : ArangoDB Shell
+db._useDatabase("hoteldb")
+
+-- Creacion de una tabla: MySQL
+CREATE TABLE Cliente (
+      DNI        char(9) NOT NULL,
+      Nombre     varchar(10)
+      PRIMARY KEY (DNI)
+);
+
+-- Creación de una colección : ArangoDB Shell
+db._create("cliente");
+
+-- Eliminación de una tabla : MySQL
+DROP TABLE Cliente;
+
+-- Eliminacion de una colección: ArangoDB Shell
+db._drop("cliente");
 
 -- CLAUSULA INSERT
 -- Inserción de datos: 1 solo registro : MySQL
@@ -28,7 +58,7 @@ INSERT user INTO cliente
 ---------------------------------------------------------------------------------------------------------
 -- CLAUSULA UPDATE
 -- Actualizacion de datos: 1 solo registro : MySQL
-UPDATE cliente SET name = "Marcela Guerrero" WHERE id = 1;
+UPDATE cliente SET nombre = "Marcela Guerrero" WHERE id = 1;
 
 -- Actualizacion de datos: 1 solo documento : ArangoDB
 UPDATE { _key: "111111" } WITH { "nombre": "Marcela Guerrero" } IN cliente

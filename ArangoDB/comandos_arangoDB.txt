@@ -110,7 +110,7 @@ FOR user in cliente
 FILTER user.numero == 0 and user._key == "182092"
 RETURN user
 
--- Clausula SORT : OrderBY
+-- Clausula SORT : Orderby
 
 -- Seleccionar los registros de una colección y ordenarlos por algun factor : ArangoDB
 FOR user IN cliente
@@ -118,3 +118,23 @@ FOR user IN cliente
   SORT user.nombre, user.genero
   RETURN user
 
+-- CLAUSULAS DE AGREGACIÓN 
+-- Clausula Count y Agrupación : Count y Group by
+
+-- Contar cuantas repeticiones existen de acuerdo a una condicion
+FOR u in Empleado
+    COLLECT
+		sueldo = u.Sueldo
+		WITH COUNT INTO number
+	RETURN { Empleado: sueldo, NumeroHab: number}
+	
+
+-- Clausula MIN y MAX
+-- Seleccionar el valor maximo y minimo de un atributo numerico
+FOR e in Empleado
+	FOR s in Servicio
+	FILTER e.CodS == s._id and s.Descripcion like 'restaurante'
+	COLLECT AGGREGATE
+		sueldoMin = MIN(e.Sueldo),
+		sueldoMax = MAX(e.Sueldo)
+	RETURN { sueldoMin, sueldoMax }

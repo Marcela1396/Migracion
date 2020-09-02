@@ -43,11 +43,11 @@
 --- Estas colecciones (NoSQL) representan a aquellos casos donde los documentos que  no tienen ninguna relacion de referencia a 
 -- otro documento.
 
--- Colección Precio -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-arangoimp --file "C:\Users\marce\Downloads\hoteldb2\precio.json" --collection Precio --create-collection true --server.database hoteldb2
-
 -- Colección Cliente  ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
 arangoimp --file "C:\Users\marce\Downloads\hoteldb2\cliente.json" --collection Cliente --create-collection true --server.database hoteldb2
+
+-- Colección Precio -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+arangoimp --file "C:\Users\marce\Downloads\hoteldb2\precio.json" --collection Precio --create-collection true --server.database hoteldb2
 
 -- Colección FormaPago  -------------------------------------------------------------------------------------------------------------------------------------------------------------------
 arangoimp --file "C:\Users\marce\Downloads\hoteldb2\formapago.json" --collection FormaPago --create-collection true --server.database hoteldb2

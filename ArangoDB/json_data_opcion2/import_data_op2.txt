@@ -89,10 +89,9 @@ arangoimp --file "C:\Users\marce\Downloads\hoteldb2\proveedor.json" --collection
 -- #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#--#-#-#-#-#-#-#-#-#-#-#-#-#-#--#-#-#-#-#-
 
 -- Caso 3: Colecciones Many to Many (Solo 2 relaciones)
--- Para este tipo de colecciones se empleó documentos de tipo Edge 
--- Edge son documentos especiales que se utilizan para conectar otros documentos
--- Edge describe la conexión entre dos documentos utilizando los atributos internos: _from y _to. 
--- Estos contienen identificadores de documentos, a saber, el punto de inicio y el punto final del enlace
+-- Para este caso se creo colecciones de tipo Edge 
+-- Edge permite conectar documentos con otros a partir de un enlace. Para el logro de dicho objetivo se emplean los atributos internos: _from y _to los 
+-- cuales contienen identificadores de documentos a conectar teniendo el punto de inicio y el punto final del enlace
 
 -- Colección Reserva => Enlace "_from":"Cliente/111111", "_to":"Habitacion/101"
 arangoimp --file "C:\Users\marce\Downloads\hotel\reserva.json" --collection Reserva --create-collection-type edge true --server.database hoteldb
