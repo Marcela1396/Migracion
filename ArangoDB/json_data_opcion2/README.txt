@@ -42,13 +42,13 @@ La colección Factura maneja una excepcion ya que tiene más de 2 relaciones por
 -- otro documento.
 
 -- Colección Precio -----------------------------------------------------------------------------------------------------------------------------------------------------------
-arangoimp --file "C:\Users\marce\Downloads\hoteldb2\precio.json" --collection Precio --create-collection true --server.database hoteldb2
+arangoimp --file "C:\Users\marce\Downloads\hoteldb\precio.json" --collection Precio --create-collection true --server.database hoteldb
 
 -- Colección Cliente  ---------------------------------------------------------------------------------------------------------------------------------------------------------
-arangoimp --file "C:\Users\marce\Downloads\hoteldb2\cliente.json" --collection Cliente --create-collection true --server.database hoteldb2
+arangoimp --file "C:\Users\marce\Downloads\hoteldb\cliente.json" --collection Cliente --create-collection true --server.database hoteldb
 
 -- Colección FormaPago  -------------------------------------------------------------------------------------------------------------------------------------------------------
-arangoimp --file "C:\Users\marce\Downloads\hoteldb2\formapago.json" --collection FormaPago --create-collection true --server.database hoteldb2
+arangoimp --file "C:\Users\marce\Downloads\hoteldb\formapago.json" --collection FormaPago --create-collection true --server.database hoteldb
 
 -- #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#
 
@@ -63,28 +63,28 @@ arangoimp --file "C:\Users\marce\Downloads\hoteldb2\formapago.json" --collection
  => Atributo que servira para la referencia en el Documento Habitación: "Tipo"
  =>  Ej: "Tipo":"Precio/1"
  
-arangoimp --file "C:\Users\marce\Downloads\hoteldb2\habitacion.json" --collection Habitacion --create-collection true --server.database hoteldb2
+arangoimp --file "C:\Users\marce\Downloads\hoteldb\habitacion.json" --collection Habitacion --create-collection true --server.database hoteldb
 
 -- Colección Empleado   -------------------------------------------------------------------------------------------------------------------------------------------------------
 => Colección a Referenciar: Servicio
 => Atributo que servira para la referencia en el Documento Empleado: "CodS"
 =>  Ej: "CodS":"Servicio/1"
 
-arangoimp --file "C:\Users\marce\Downloads\hoteldb2\empleado.json" --collection Empleado --create-collection true --server.database hoteldb2
+arangoimp --file "C:\Users\marce\Downloads\hoteldb\empleado.json" --collection Empleado --create-collection true --server.database hoteldb
 
 -- Colección Servicio  --------------------------------------------------------------------------------------------------------------------------------------------------------
 => Colección a Referenciar: Empleado
 => Atributo que servira para la referencia en el Documento Servicio: "NumReg"
 =>  Ej: "NumReg":"Empleado/1"
 
-arangoimp --file "C:\Users\marce\Downloads\hoteldb2\servicio.json" --collection Servicio --create-collection true --server.database hoteldb2
+arangoimp --file "C:\Users\marce\Downloads\hoteldb\servicio.json" --collection Servicio --create-collection true --server.database hoteldb
 
 -- Colección Proveedor  -------------------------------------------------------------------------------------------------------------------------------------------------------
 => Colección a Referenciar: Empleado
 => Atributo que servira para la referencia en el Documento Proveedor: "NumReg"
 => Ej: "NumReg":"Empleado/1"
 
-arangoimp --file "C:\Users\marce\Downloads\hoteldb2\proveedor.json" --collection Proveedor --create-collection true --server.database hoteldb2
+arangoimp --file "C:\Users\marce\Downloads\hoteldb\proveedor.json" --collection Proveedor --create-collection true --server.database hoteldb
 
 -- #-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#-#--#-#-#-#-#-#-#-#-#-#-#-#-#-#--#-#-#-#-#-
 
