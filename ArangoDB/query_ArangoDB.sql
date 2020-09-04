@@ -20,6 +20,13 @@ SELECT * from empleado
 -->  ArangoDB --------------------
 FOR worker IN Empleado
   RETURN worker
+  
+-- Con información detallada de los empleados y los servicios asignados
+FOR worker IN Empleado
+    FOR service IN Servicio
+        FILTER worker.CodS == service._id
+        RETURN {worker, service}
+
 
 -- # ========================================================================================================= 
 -- 2) Obtener el nombre del jefe del servicio de "Restaurante"
@@ -34,13 +41,13 @@ where descripcion like 'restaurante'
 FOR service IN Servicio
   FOR worker IN Empleado
     FILTER service.NumReg == worker._id and service.Descripcion == "restaurante"
-    RETURN { Servicio: service, Empleado: worker }
+    RETURN { Servicio: service, Jefe: worker }
     
 -- Para el caso solo muestra el nombre del empleado y la descripcion del servicio (Restaurante) 
 FOR service IN Servicio
   FOR worker IN Empleado
     FILTER service.NumReg == worker._id and service.Descripcion == "restaurante"
-    RETURN {Empleado : worker.Nombre, Servicio: service.Descripcion }
+    RETURN {Jefe : worker.Nombre, Servicio: service.Descripcion }
 
 -- OPCION 2
 -- Une las dos colecciones y muestra el resultado en un solo documento con todos los atributos con la 
@@ -266,10 +273,25 @@ select empleado.nombre from empleado join servicio on empleado.NumReg = servicio
 -- > ArangoDB
 FOR p IN Proveedor
 	FOR f IN Factura_Prov
-	FOR e IN Empleado
-		FILTER p._id == f.NIF and f.NumReg == e._id
-		RETURN DISTINCT{Proveedor: p.Nombre, Empleado_Encargado: e.Nombre}
+		FOR e IN Empleado
+			FILTER p._id == f.NIF and f.NumReg == e._id
+			RETURN DISTINCT{Proveedor: p.Nombre, Encargado: e.Nombre}
+
+
+LET A =
+(
+FOR e2 IN Empleado
+	FOR p2 IN Proveedor
+		FILTER p2.NumReg == e2._id
+		RETURN DISTINCT{Worker: e2._key}
+)
 
 
 
+LET B = (
+FOR e3 IN Empleado
+	FOR s3 IN Servicio
+		FILTER e3._id == s3.NumReg
+		RETURN DISTINCT{Worker: e3._key}
+)
 
